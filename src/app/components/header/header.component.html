@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003b64">
+	<a class="navbar-brand" href="/">
+		<img src="assets/icons/logo.png" width="100" height="100" alt="IMG-LOGO">
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="/mobile">Shop</a></li>
+			<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+			<li class="nav-item"><a class="nav-link" href="/contact">Services</a></li>	
+		</ul>
+		
+		<form class="form-inline my-2 my-lg-0" >
+			<div class="form-group">
+				<input class="form-control mr-sm-2" type="text" id="keyword" placeholder="Search" required>
+					<button type="submit" class="header-search-button" (click)="redirectSearch($event)" type="button">
+						<img src="assets/icons/search.png" width="45" height="35" alt="IMG-Search">
+					</button>
+			</div>
+		</form>
+		<div class="navbar-nav" style="margin-left: 1%" *ngIf="!isLoggedIn">
+			<a href="/login" class="header-wrapicon1 dis-block">
+				<img src="assets/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+			</a>
+		</div>
+		<div class="navbar-nav" style="margin-left: 2%" *ngIf="isLoggedIn">
+		  <ul>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Hi, {{ name }}
+				</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<a class="dropdown-item" href="/user/profile">My Account</a>
+				<a class="dropdown-item" href="/user/orders">My Orders</a>
+				<a class="dropdown-item" (click)="logoutUser($event)">Logout</a>
+			</div>
+			</li>
+		  </ul>
+		</div>
+		<a href="/cart" style="margin-left: 2%;" class="shoppingCart">
+			<img src="assets/icons/icon-header-02.png">
+		</a>
+	</div>
+</nav>

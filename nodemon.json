@@ -1,0 +1,4 @@
+{
+    "ignore": ["src/*", "uploads/*"],
+    "verbose": true
+}

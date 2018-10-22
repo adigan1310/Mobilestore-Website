@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="ro" *ngIf="newMobile && !mobileAdded && !mobileUpdated">
+    <div>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="mobile">Mobile</a></li>
+        <li class="breadcrumb-item active" *ngIf="!editPage">add</li>
+        <li class="breadcrumb-item" *ngIf="editPage"><a href="mobile/{{newMobile._id}}">{{ newMobile.name }}</a></li>
+        <li class="breadcrumb-item active" *ngIf="editPage">edit</li>
+      </ol>
+    </div>
+    <form class="form" (submit)="addMobile($event)" >
+      <div class="form-group row">
+        <label for="name" class="col-1 col-form-label">Name</label>
+        <div class="col-4">
+          <input class="form-control" type="text" name="Pixel 2XL" id="name" [(ngModel)]="newMobile.name" required>
+        </div>
+        <div class="col-1"></div>
+        <label for="brand" class="col-1 col-form-label">Brand</label>
+        <div class="col-4">
+          <input class="form-control" type="search"  name="Google" id="brand" [(ngModel)]="newMobile.brand" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="os" class="col-1 col-form-label">OS</label>
+        <div class="col-4">
+          <select class="form-control" id="os" value="Android" name="Android" [(ngModel)]="newMobile.os" required>
+            <option selected="selected">Android</option>
+            <option>iOS</option>
+          </select>
+        </div>
+        <div class="col-1"></div>
+        <label for="osVersion" class="col-1 col-form-label">OS Version</label>
+        <div class="col-4">
+          <input class="form-control" type="search"  name="Version" id="version" [(ngModel)]="newMobile.osVersion" required>
+          <!--<select class="form-control" id="osVersion" value="8" name="8" [(ngModel)]="newMobile.osVersion" required>
+            <option *ngIf="newMobile.os=='Android'" selected="selected">8.0</option>
+            <option *ngIf="newMobile.os=='Android'">7.1.2</option>
+            <option *ngIf="newMobile.os=='Android'">7.1.1</option>
+            <option *ngIf="newMobile.os=='Android'">7.1</option>
+            <option *ngIf="newMobile.os=='Android'">6.0</option>
+            <option *ngIf="newMobile.os=='Android'">5.0 </option>
+            <option *ngIf="newMobile.os=='iOS'">11.1</option>
+            <option *ngIf="newMobile.os=='iOS'">11.0</option>
+            <option *ngIf="newMobile.os=='iOS'">10.0</option>
+            <option *ngIf="newMobile.os=='iOS'">9.5</option>
+          </select>--> 
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="display" class="col-1 col-form-label">Display (in)</label>
+        <div class="col-4">
+          <input class="form-control" type="number"  name="5.5" id="display" step="0.1" min="4.0" max="7.0" [(ngModel)]="newMobile.display.size" required>
+        </div>
+        <div class="col-1"></div>
+        <label for="display" class="col-1 col-form-label">Resolution</label>
+        <div class="col-4">
+          <input class="form-control" type="text" title="1920 X 1024"  pattern="[0-9]{3,4}( X )[0-9]{3,4}" name="1920 X 1024" id="display" [(ngModel)]="newMobile.display.resolution" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="primaryCamera" class="col-1 col-form-label">Primary Camera (MP)</label>
+        <div class="col-4">
+            <input class="form-control" type="search"  name="primaryCamera" id="primaryCamera" [(ngModel)]="newMobile.camera.primary.imagesensor" required>
+          <!--<input class="form-control"type="number" value="8" name="8" step="0.1" min="5" max="30" id="primaryCamera" [(ngModel)]="newMobile.camera.primary[0].imagesensor" required>-->
+        </div>
+        <div class="col-1"></div>
+        <label for="secondaryCamera" class="col-1 col-form-label">Secondary Camera (MP)</label>
+        <div class="col-4">
+            <input class="form-control" type="search"  name="secondaryCamera" id="secondaryCamera" [(ngModel)]="newMobile.camera.secondary.imagesensor" required>
+          <!--<input class="form-control" type="number" value="8" name="8" step="0.1" min="5" max="30 " id="secondaryCamera" [(ngModel)]="newMobile.camera.secondary.imagesensor" required>-->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="cpu" class="col-1 col-form-label">CPU</label>
+        <div class="col-4">
+          <input class="form-control" type="text"  name="Qualcomm MSM8998 Snapdragon 835" id="cpu" [(ngModel)]="newMobile.cpu" required>
+        </div>
+        <div class="col-1"></div>
+        <label for="gpu" class="col-1 col-form-label">GPU</label>
+        <div class="col-4">
+          <input class="form-control" type="text"  name="Adreno 540" id="gpu" [(ngModel)]="newMobile.gpu" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="ram" class="col-1 col-form-label">RAM (GB)</label>
+        <div class="col-4">
+          <input class="form-control" type="number" name="3" id="ram" min="1" max="8" [(ngModel)]="newMobile.memory.ram" required>
+        </div>
+        <div class="col-1"></div>
+        <label for="battery" class="col-1 col-form-label">Battery (mAh)</label>
+        <div class="col-4">
+          <input class="form-control" type="number"  name="3500" min="1000" max="4500" step="10" id="battery" [(ngModel)]="newMobile.battery.power" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="price" class="col-1 col-form-label">Price ($)</label>
+        <div class="col-4">
+          <input class="form-control" type="number"  name="900" min="100" max="9999" step="50" id="price" [(ngModel)]="newMobile.price.value" required>
+        </div>
+        <div class="col-1"></div>
+        <label for="image" class="col-1 col-form-label">Image</label>
+        <div class="col-4">
+          <input type="file" class="form-control-file" id="mobileImage" name="mobileImage" aria-describedby="fileHelp">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="quantity" class="col-1 col-form-label">Available Quantity</label>
+        <div class="col-4">
+          <input class="form-control" type="number"  name="5" min="0" max="10" id="quantity" [(ngModel)]="newMobile.availableQuantity" required>
+        </div>
+      </div>
+      <div *ngIf="!editPage" class="form-group row">
+        <div class="col-4"></div>
+        <button type="submit" class="btn btn-primary">Add Mobile</button>
+      </div>
+      <div *ngIf="editPage" class="form-group row">
+        <div class="col-4"></div>
+        <button type="submit" class="btn btn-primary">Update Mobile</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="mobileAdded" class="container-fluid" class="mobileNotFound">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <span class="display-3">Mobile Added</span>
+        <a href="/mobile/{{newMobile._id}}">
+          <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+            Click to View
+          </button>
+        </a>
+      </div>
+    </div>
+</div>
+<div *ngIf="mobileUpdated" class="container-fluid" class="mobileNotFound">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <span class="display-10 p-b-10">Mobile Updated</span>
+        <a href="/mobile/{{newMobile._id}}">
+          <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+            Click to View
+          </button>
+        </a>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<div class="container-fluid" id="mobileInstance" *ngIf="mobileDetails && !deleteMobile && !mobileDeleted">
+    <div>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="mobile">Mobile</a></li>
+        <li class="breadcrumb-item active">{{ mobileDetails.name }}</li>
+      </ol>
+    </div>
+    <div class="row mobileImage">
+        <div class="col-lg-5" style="padding-top: 5%;">
+            <img *ngIf="mobileDetails && mobileDetails.image" class="mobilePic" src="assets/{{mobileDetails.image}}" alt="{{mobileDetails.name}}">
+        </div>
+        <div class="col-lg-6">
+          <h3 class="a-size-medium a-spacing-base a-spacing-top-base a-color-tertiary a-text-normal">{{mobileDetails.name}}</h3>
+          <hr />
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6">
+                <span class="specName">Processor</span> <br />
+                <div class="col-lg-12">
+                  <span class="a-size-medium a-color-secondary">{{mobileDetails.cpu}}</span>
+                </div>
+              </div>
+            <div class="col-lg-6">
+              <span class="specName">Operating System</span> <br />
+              <div class="col-lg-12">
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.os}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <span class="specName">Display</span> <br />
+              <div class="col-lg-12">
+                <span class="subspecName">Resolution:</span>
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.display.resolution}}</span>
+              </div>
+              <div class="col-lg-12">
+                <span class="subspecName">Screen Size:</span>
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.display.size}}"</span>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <span class="specName">Camera</span> <br />
+              <div class="col-lg-12"> 
+                <span class="subspecName">Rear Camera:</span>
+                <span *ngFor="let primaryCamera of mobileDetails.camera.primary">
+                  <span class="a-size-medium a-color-secondary">
+                    {{primaryCamera.imagesensor}} {{primaryCamera.unit}} <span *ngIf="primaryCamera.focallength">, {{primaryCamera.focallength}}</span>
+                  </span>
+                </span>
+              </div>
+              <div class="col-lg-12">
+                <span class="subspecName">Front Camera:</span>
+                <span class="a-size-medium a-color-secondary">
+                  {{mobileDetails.camera.secondary.imagesensor}} {{mobileDetails.camera.secondary.unit}}
+                  <span *ngIf="mobileDetails.camera.secondary.focallength">, {{mobileDetails.camera.secondary.focallength}}</span>
+                </span>
+            </div>
+          </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <span class="specName">Memory</span> <br />
+              <div class="col-lg-12">
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.memory.ram}} {{mobileDetails.memory.unit}}</span>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <span class="specName">Battery</span> <br />
+              <div class="col-lg-12">
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.battery.power}} {{mobileDetails.battery.unit}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <span class="specName">Graphics</span> <br />
+              <div class="col-lg-12">
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.gpu}}</span>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <span class="specName">Price</span> <br />
+              <div class="col-lg-12">
+                <span class="a-size-medium a-color-secondary">{{mobileDetails.price.value}} {{mobileDetails.price.unit}}</span>
+              </div>
+            </div>
+          </div>
+
+        <div class="row" style="padding-top:2%;">
+          <div class="col-lg-8">
+            <div class="p-b-10">
+              <a *ngIf="mobileDetails.availableQuantity == 0" class="btn btn-secondary">Out of Stock</a>
+              <a *ngIf="mobileDetails.availableQuantity != 0" class="btn btn-success" (click)="addToCart()">Add to Cart</a>
+            </div>
+            <hr />
+            <div class="p-b-20">
+              <a *ngIf="isAdmin" class="btn btn-info" href="mobile/{{mobileDetails._id}}/edit">Edit Mobile</a>
+              <a *ngIf="isAdmin" class="btn btn-danger" (click)="confirmDelete()">Delete Mobile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+</div>
+<div *ngIf="!mobileDetails" class="container-fluid" class="mobileNotFound">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <span class="display-4">Invalid Mobile Id.</span>
+      </div>
+    </div>
+</div>
+<div *ngIf="deleteMobile && !mobileDeleted" class="container-fluid" class="mobileNotFound">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <span class="display-4">Are you Sure?</span><br/>
+        <div style="padding-top: 15%;">
+          <a class="btn btn-success" style="color:white;" (click)="revertDelete()">Go back</a>
+          <a class="btn btn-danger" style="color:white;" (click)="removeMobile()">Delete Mobile</a>
+        </div>
+      </div>
+    </div>
+</div>
+<div *ngIf="mobileDeleted" class="container-fluid" class="mobileNotFound">
+    <div class="row">
+      <div class="col-lg-4"></div>
+      <div class="col-lg-4">
+        <span class="display-4">Mobile Deleted</span>
+        <a href="/mobile/{{newMobile._id}}">
+          <button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4">
+            Click to View
+          </button>
+        </a>
+      </div>
+    </div>
+</div>
